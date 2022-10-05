@@ -1,9 +1,13 @@
 package com.plcoding.spotifycloneyt.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,18 +15,37 @@ import androidx.navigation.fragment.findNavController
 import com.plcoding.spotifycloneyt.R
 import com.plcoding.spotifycloneyt.adapters.GenreAdapter
 import com.plcoding.spotifycloneyt.data.remote.api.Genre
+import com.plcoding.spotifycloneyt.databinding.FragmentGenreBinding
 import com.plcoding.spotifycloneyt.other.Constants
+import com.plcoding.spotifycloneyt.ui.MainActivity
 import com.plcoding.spotifycloneyt.ui.viewmodels.GenreViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_genre.*
 
 @AndroidEntryPoint
-class GenreFragment : Fragment(R.layout.fragment_genre) {
+class GenreFragment : Fragment() {
 
+    lateinit var fragmentGenreBinding: FragmentGenreBinding
     lateinit var genreAdapter: GenreAdapter
+    lateinit var mainActivity: MainActivity
     lateinit var genreViewModel: GenreViewModel
+
     var genreList: List<Genre> = listOf()
     var searchedGenreList: MutableList<Genre> = mutableListOf()
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        fragmentGenreBinding = DataBindingUtil.inflate(layoutInflater,R.layout.fragment_genre,container,false)
+        mainActivity.bottom_navigation.visibility = View.VISIBLE
+
+        return fragmentGenreBinding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         genreViewModel = ViewModelProvider(requireActivity()).get(GenreViewModel::class.java)
@@ -82,4 +105,8 @@ class GenreFragment : Fragment(R.layout.fragment_genre) {
         })
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = context as MainActivity
+    }
 }
