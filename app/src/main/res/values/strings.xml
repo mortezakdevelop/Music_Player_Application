@@ -7,4 +7,6 @@
     <string name="home">Home</string>
     <string name="something_is_wrong_try_later">Something is wrong try later</string>
     <string name="please_fill_comment">لطفا ابتدا کامنت رو وارد نمایید</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
